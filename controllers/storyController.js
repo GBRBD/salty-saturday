@@ -11,7 +11,7 @@ exports.createStory = async (req, res) => {
   const story = await (new Story(req.body)).save();
   req.flash('success', `Successfully Created.`);
   // TODO: Redirect to the created story
-  res.redirect(`/stories/${story._id}`);
+  res.redirect(`/story/${story._id}`);
 };
 
 // Get every story and show them on the '/stories'
@@ -41,7 +41,7 @@ exports.updateStory = async (req, res) => {
     new: true, // return the new story instead of the old one
     runValidators: true
   }).exec();
-  req.flash('success', `Successfully updated <strong>${story.title}</strong>. <a href="/stories/${story._id}">View Story </a>`);
+  req.flash('success', `Successfully updated <strong>${story.title}</strong>. <a href="/story/${story._id}">View Story </a>`);
   res.redirect(`/stories/${story._id}/edit`);
   // Redriect to the story and tell it worked
 };
