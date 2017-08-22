@@ -19,6 +19,7 @@ const storySchema = new Schema({
         type: Date,
         default: Date.now
     }
+    // TODO: Max Lenght Validation
 });
 
 module.exports = mongoose.model('Story', storySchema);
