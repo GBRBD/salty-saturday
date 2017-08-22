@@ -13,6 +13,8 @@ const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 
+require('./handlers/passportHandler');
+
 // create our Express app
 const app = express();
 
