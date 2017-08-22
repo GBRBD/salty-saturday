@@ -1,0 +1,13 @@
+mixin registerForm()
+      form.form(action="/register" method="POST")
+            h2 Register
+            label(for="username") Username
+            input(type="text" name="username" value=body ? body.username : "")
+            label(for="email") Email
+            input(type="text" name="email" value=body ? body.email : "")
+            label(for="password") Password
+            input(type="password" name="password")
+            label(for="password-confirm") Confirm Password
+            input(type="password" name="password-confirm")
+            p By sign up cond und terms und stuff ...
+            input(type="submit" value="Sign up!")
