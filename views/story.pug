@@ -2,6 +2,7 @@ extends layout
 
 block content
   h2= story.title
+  a(href=`/stories/${story._id}/edit`) Edit
   p= story.created
   p= story.story
   //- Salty points 

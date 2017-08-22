@@ -41,7 +41,7 @@ exports.updateStory = async (req, res) => {
     new: true, // return the new story instead of the old one
     runValidators: true
   }).exec();
-  req.flash('success', `Successfully updated <strong>${story.title}</strong>. <a href="/story/${story._id}">View Story </a>`);
-  res.redirect(`/stories/${story._id}/edit`);
+  req.flash('success', 'You\'ve successfully updated your salty story!');
+  res.redirect(`/story/${story._id}`);
   // Redriect to the story and tell it worked
 };
