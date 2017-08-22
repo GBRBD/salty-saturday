@@ -1,6 +1,6 @@
-mixin storyCard(story = {})
+mixin storyCard( story = {} )
   h2
-    a(href=`/stories/${story._id}`) #{story.title}
+    a(href=`/story/${story._id}`) #{story.title}
   a(href=`/stories/${story._id}/edit`) Edit
   p= story.story.split(' ').slice(0, 25).join(' ')
   p= story.created

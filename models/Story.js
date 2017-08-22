@@ -9,7 +9,6 @@ const storySchema = new Schema({
         trim: true,
         required: 'You must supply a title!'
     },
-    slug: String,
     story: {
         type: String,
         trim: true,

@@ -1,10 +1,10 @@
-mixin storyForm()
-  form(action="/add" method="POST")
+mixin storyForm( story = {} )
+  form(action=`/add/${story._id || ''}` method="POST")
     //- Title
     label(for="title") Title
-    input(type="text" name="title")
+    input(type="text" name="title" value=story.title)
     //- Story
     label(for="title") Story
-    textarea(name="story")
+    textarea(name="story")= story.story
     //- Button
     input(type="submit" value="Save")
