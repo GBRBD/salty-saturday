@@ -1,0 +1,10 @@
+mixin storyForm()
+  form(action="/add" method="POST")
+    //- Title
+    label(for="title") Title
+    input(type="text" name="title")
+    //- Story
+    label(for="title") Story
+    textarea(name="story")
+    //- Button
+    input(type="submit" value="Save")
