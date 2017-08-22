@@ -1,0 +1,7 @@
+extends layout
+
+include mixins/_storyCard
+
+block content
+  each story in stories
+    +storyCard(story)
