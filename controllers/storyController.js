@@ -20,10 +20,10 @@ exports.createStory = async (req, res) => {
 };
 
 /**
- * Get every story and show them on the '/stories'
+ * Get every story and show them on the '/stories', the last created store is the first in the page
  */
-exports.getStories = async (req, res) => {
-  const stories = await Story.find();
+exports.getHotStories = async (req, res) => {
+  const stories = await Story.find().sort({ created: -1 });
   res.render('stories/stories', { title: 'Salty Stories', stories });
 };
 
