@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+    form(actiond="/reset" method="POST")
+        label(for="email") Email address
+        input(type="text" name="email" id="email")
+        input(type="submit" value="Reset my password") 

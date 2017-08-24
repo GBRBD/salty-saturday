@@ -12,19 +12,38 @@ const storyController = require('../controllers/storyController');
 
 router.get('/', storyController.getStories);
 
-// Auth
-router.get('/register', userController.registerForm);
+// Register
+router.get('/register', 
+    userMiddleware.shouldNotBeLoggedIn,
+    userController.registerForm);
 router.post('/register',
     userMiddleware.validateRegister,
-    userMiddleware.isUsernameExist,
-    userMiddleware.isEmailExist,
-    userController.register,
+    catchErrors(userMiddleware.isUsernameExist),
+    catchErrors(userMiddleware.isEmailExist),
+    catchErrors(userController.register),
     authController.login
 );
 
-router.get('/login', userController.loginForm);
+// Log in
+router.get('/login', 
+    userMiddleware.shouldNotBeLoggedIn,
+    userController.loginForm);
 router.post('/login', authController.login);
 
+// Claiming new password
+router.get('/reset', 
+    userMiddleware.shouldNotBeLoggedIn,
+    userController.forgotForm);
+router.post('/reset', catchErrors(userController.forgot));
+
+// Reset flow
+router.get('/account/new-password/:token', catchErrors(userController.reset));
+router.post('/account/new-password/:token',
+    userMiddleware.confirmedPasswords,
+    userMiddleware.validatePasswords,
+    catchErrors(userController.setNewPassword));
+
+// Logout
 router.get('/logout', authController.logout);
 
 // Shows the create story page
