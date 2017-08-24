@@ -6,6 +6,9 @@ const validator = require('validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
 
+/**
+ * User schema
+ */
 const userSchema = new Schema({
     username: {
         type: String,

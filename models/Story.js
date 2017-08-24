@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
-// Story schema
+/**
+ * Story schema
+ */
 const storySchema = new Schema({
     title: {
         type: String,
@@ -17,7 +19,12 @@ const storySchema = new Schema({
     created: {
         type: Date,
         default: Date.now
-    }
+    },
+    author: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: 'You must supply an author!'
+      }
     // TODO: Max Lenght Validation
 });
 

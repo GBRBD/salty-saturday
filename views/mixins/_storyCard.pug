@@ -1,7 +1,9 @@
 mixin storyCard( story = {} )
   h2
     a(href=`/story/${story._id}`) #{story.title}
-  a(href=`/stories/${story._id}/edit`) Edit
+  //- Only the author can edit the story
+  if user && story.author.equals(user._id)
+    a(href=`/stories/${story._id}/edit`) Edit 
   p= story.story.split(' ').slice(0, 25).join(' ')
   p= story.created
   //- Report

@@ -2,7 +2,9 @@ extends layout
 
 block content
   h2= story.title
-  a(href=`/stories/${story._id}/edit`) Edit
+  //- Only the author can edit the story
+  if user && story.author.equals(user._id)
+    a(href=`/stories/${story._id}/edit`) Edit
   p= story.created
   p= story.story
   //- Salty points 
