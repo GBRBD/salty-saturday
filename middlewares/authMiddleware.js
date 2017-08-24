@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+
 /**
  * Auth middleware
  */
@@ -36,9 +39,9 @@ exports.validateRegister = (req, res, next) => {
     gmail_remove_subaddress: false
   });
 
-  req.checkBody('username', 'You must supply a username between 4 and 12 characters!').isLength({min: 4, max: 12});
+  req.checkBody('username', 'You must supply a username between 4 and 12 characters!').isLength({ min: 4, max: 12 });
   req.checkBody('email', 'That email is not valid!').isEmail();
-  req.checkBody('password', 'You must supply a password between 6 and 18 characters!').isLength({min: 6, max: 18});
+  req.checkBody('password', 'You must supply a password between 6 and 18 characters!').isLength({ min: 6, max: 18 });
   req.checkBody('password-confirm', 'Confirmed Password cannot be blank!').notEmpty();
   req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);
 
@@ -52,3 +55,36 @@ exports.validateRegister = (req, res, next) => {
   next(); // there were no errors!
 
 };
+
+/**
+ * Is data already exist?
+ */
+
+exports.isUsernameExist = async (req, res, next) => {
+
+  const user = await User.findOne({ username: req.body.username });
+
+  if (user) {
+    req.flash('error', 'This username is already taken!');
+    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+  }
+
+  next();
+
+}
+
+exports.isEmailExist = async (req, res, next) => {
+
+  console.log(req.body.email);
+
+  const user = await User.findOne({ email: req.body.email });
+
+  if (user) {
+    req.flash('error', "This email address is already taken!");
+    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    return;
+  }
+
+  next();
+
+}

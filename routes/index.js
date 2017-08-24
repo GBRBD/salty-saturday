@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { catchErrors } = require('../handlers/errorHandlers');
 
-const authMiddleware = require('../middlewares/authMiddleware');
+const userMiddleware = require('../middlewares/userMiddleware');
 
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
@@ -15,7 +15,9 @@ router.get('/', (req, res) => { res.send('ishome') });
 // Auth
 router.get('/register', userController.registerForm);
 router.post('/register',
-    authMiddleware.validateRegister,
+    userMiddleware.validateRegister,
+    userMiddleware.isUsernameExist,
+    userMiddleware.isEmailExist,
     userController.register,
     authController.login
 );
