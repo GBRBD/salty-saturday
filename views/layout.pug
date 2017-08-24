@@ -9,13 +9,31 @@ html(lang="en")
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
     block header
-      h2 Pina
-      <hr>
-    
+      each item in h.menu
+        li
+          a(href=item.slug)
+            span #{item.title}
+
+      if user
+        li: a(href="/logout")
+          span Logout
+        li: a(href="/account")
+          span Account
+        span You are logged in as #{user.username}
+      else
+        li: a(href="/register") Register
+        li: a(href="/login") Login
+
     +flash()
 
     .content
       block content
+
+      block footer
+        each item in h.footermenu
+          li
+            a(href=item.slug)
+              span #{item.title}
 
     block scripts
       script(src="/dist/App.bundle.js")
