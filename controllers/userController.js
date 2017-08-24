@@ -64,7 +64,9 @@ exports.forgot = async (req, res) => {
     res.redirect('/login');
 };
 
-
+/**
+ * Password reset form
+ */
 exports.reset = async (req, res) => {
     const user = await User.findOne({
         resetPasswordToken: req.params.token,
@@ -78,6 +80,9 @@ exports.reset = async (req, res) => {
     res.render('auth/new-password', { title: 'Reset your Password' });
 };
 
+/**
+ * Set user's new password
+ */
 exports.setNewPassword = async (req, res) => {
     const user = await User.findOne({
         resetPasswordToken: req.params.token,
