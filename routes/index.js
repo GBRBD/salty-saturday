@@ -7,10 +7,19 @@ const userMiddleware = require('../middlewares/userMiddleware');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const storyController = require('../controllers/storyController');
-
+const testController = require('../controllers/testController');
+const pagesController = require('../controllers/pagesController');
 // Controllers
 
-router.get('/', storyController.getStories);
+// Index pages
+router.get('/', storyController.getHotStories);
+router.get('/hot', storyController.getHotStories);
+
+// Daily top
+router.get('/top', testController.test);
+
+// Hall of Salt
+router.get('/hallofsalt', testController.test);
 
 // Register
 router.get('/register', 
@@ -62,5 +71,11 @@ router.get('/stories', catchErrors(storyController.getStories));
 // Render out the edit form so the user can update their story
 router.get('/stories/:id/edit', storyController.editStory);
 
+// FAQ
+router.get('/faq', pagesController.faq);
+// Contact
+router.get('/contact', testController.test);
+// Feature Request
+router.get('/featurereq', testController.test);
 
 module.exports = router;

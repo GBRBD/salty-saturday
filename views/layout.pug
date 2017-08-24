@@ -9,6 +9,7 @@ html(lang="en")
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
     block header
+    a(href="/") SALTY SATURDAY
       each item in h.menu
         li
           a(href=item.slug)
@@ -23,9 +24,14 @@ html(lang="en")
       else
         li: a(href="/register") Register
         li: a(href="/login") Login
+<<<<<<< HEAD
         li: a(href="/reset") Forgot your shit?
         hre
 
+=======
+      <hr>
+      
+>>>>>>> feature/story
     +flash()
 
     .content
