@@ -5,7 +5,7 @@ const Story = mongoose.model('Story');
  * Renders the 'editStory.pug' which shows the '_storyForm.pug'
  */
 exports.addStory = (req, res) => {
-  res.render('editStory', { title: 'Add Story' });
+  res.render('stories/editStory', { title: 'Add Story' });
 };
 
 /**
@@ -24,7 +24,7 @@ exports.createStory = async (req, res) => {
  */
 exports.getStories = async (req, res) => {
   const stories = await Story.find();
-  res.render('stories', { title: 'Salty Stories', stories });
+  res.render('stories/stories', { title: 'Salty Stories', stories });
 };
 
 /**
@@ -33,7 +33,7 @@ exports.getStories = async (req, res) => {
 exports.getStoryById = async (req, res, next) => {
   const story = await Story.findById({ _id: req.params.id }).populate('author');
   if (!story) return next(); // !story = 404
-  res.render('story', { title: story.title, story });
+  res.render('stories/story', { title: story.title, story });
 };
 
 /**
@@ -50,7 +50,7 @@ exports.editStory = async (req, res) => {
     return;
   }
   // 3. Render out the edit form so the user can update their story
-  res.render('editStory', { title: `Edit ${story.name}`, story });
+  res.render('stories/editStory', { title: `Edit ${story.name}`, story });
 };
 
 /**
