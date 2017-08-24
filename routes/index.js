@@ -10,7 +10,7 @@ const storyController = require('../controllers/storyController');
 
 // Controllers
 
-router.get('/', (req, res) => { res.send('ishome') });
+router.get('/', storyController.getStories);
 
 // Auth
 router.get('/register', userController.registerForm);

@@ -17,4 +17,15 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 // Some details about the site
 exports.siteName = `Salty Saturday`;
 
-exports.menu = [];
+exports.menu = [
+  { slug: '/hot', title: 'Salty Saturday' },
+  { slug: '/stories', title: 'Fresh Stories' },
+  { slug: '/hallofsalt', title: 'Hall of Salt' },
+  { slug: '/add', title: 'Add' }
+];
+
+exports.footermenu = [
+  { slug: '/about', title: 'About' },
+  { slug: '/faq', title: 'FAQ' },
+  { slug: '/contact', title: 'Contact' },
+];
