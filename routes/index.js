@@ -22,7 +22,7 @@ router.get('/top', testController.test);
 router.get('/hallofsalt', testController.test);
 
 // Register
-router.get('/register', 
+router.get('/register',
     userMiddleware.shouldNotBeLoggedIn,
     userController.registerForm);
 router.post('/register',
@@ -34,13 +34,13 @@ router.post('/register',
 );
 
 // Log in
-router.get('/login', 
+router.get('/login',
     userMiddleware.shouldNotBeLoggedIn,
     userController.loginForm);
 router.post('/login', authController.login);
 
 // Claiming new password
-router.get('/reset', 
+router.get('/reset',
     userMiddleware.shouldNotBeLoggedIn,
     userController.forgotForm);
 router.post('/reset', catchErrors(userController.forgot));
@@ -48,12 +48,21 @@ router.post('/reset', catchErrors(userController.forgot));
 // Reset flow
 router.get('/account/new-password/:token', catchErrors(userController.reset));
 router.post('/account/new-password/:token',
-    userMiddleware.confirmedPasswords,
     userMiddleware.validatePasswords,
     catchErrors(userController.setNewPassword));
 
 // Logout
 router.get('/logout', authController.logout);
+
+// Account edit
+router.get('/settings', catchErrors(userController.settings));
+router.post('/settings/email',
+
+    userController.saveSettings);
+router.post('/settings/password',
+    userMiddleware.isLoggedIn,
+    userMiddleware.validatePasswords,
+    catchErrors(userController.saveNewPassword));
 
 // Shows the create story page
 // TODO: Before showing the story form, check if the user is authenticated

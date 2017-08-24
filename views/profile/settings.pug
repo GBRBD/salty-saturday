@@ -1,0 +1,12 @@
+extends ../layout
+
+include ../mixins/_password
+
+block content
+    form(action="/settings/email" method="POST")
+        label(for="email") Email address
+        input(type="text" name="email" id="email" value=user.email)
+        input(type="submit" value="Change my email")
+    hr
+    form(action="/settings/password" method="POST")
+        +password()

@@ -18,8 +18,8 @@ html(lang="en")
       if user
         li: a(href="/logout")
           span Logout
-        li: a(href="/account")
-          span Account
+        li: a(href="/settings")
+          span Settings
         span You are logged in as #{user.username}
       else
         li: a(href="/register") Register

@@ -84,6 +84,7 @@ exports.reset = async (req, res) => {
  * Set user's new password
  */
 exports.setNewPassword = async (req, res) => {
+
     const user = await User.findOne({
         resetPasswordToken: req.params.token,
         resetPasswordExpires: { $gt: Date.now() }
@@ -96,11 +97,36 @@ exports.setNewPassword = async (req, res) => {
 
     const setPassword = promisify(user.setPassword, user);
     await setPassword(req.body.password);
+
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
+
     const updatedUser = await user.save();
     await req.login(updatedUser);
+
     req.flash('success', 'Your password has been reset! You are now logged in!');
     res.redirect('/');
+
 };
 
+exports.settings = async (req, res) => {
+    const user = await User.findOne({ _id: req.user.id });
+    res.render('profile/settings', { title: 'Settings' });
+};
+
+exports.saveSettings = (req, res) => { res.send("punci") };
+
+exports.saveNewPassword = async (req, res) => {
+
+    const user = await User.findOne({ _id: req.user.id })
+    
+    const setPassword = promisify(user.setPassword, user);
+    await setPassword(req.body.password);
+    
+    const updatedUser = await user.save();
+    await req.login(updatedUser);
+
+    req.flash('success', 'Success!');
+    res.redirect('/settings');
+
+};

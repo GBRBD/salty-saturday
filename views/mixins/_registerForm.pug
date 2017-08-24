@@ -1,3 +1,5 @@
+include ./_password
+
 mixin registerForm()
       form.form(action="/register" method="POST")
             h2 Register
@@ -5,9 +7,6 @@ mixin registerForm()
             input(type="text" name="username" value=body ? body.username : "")
             label(for="email") Email
             input(type="text" name="email" value=body ? body.email : "")
-            label(for="password") Password
-            input(type="password" name="password")
-            label(for="password-confirm") Confirm Password
-            input(type="password" name="password-confirm")
+            +password()
             p By sign up cond und terms und stuff ...
             input(type="submit" value="Sign up!")

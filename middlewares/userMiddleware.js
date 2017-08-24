@@ -29,20 +29,6 @@ exports.shouldNotBeLoggedIn = (req, res, next) => {
 }
 
 /**
- * Register password confirmation 
- */
-exports.confirmedPasswords = (req, res, next) => {
-  
-  if (req.body.password === req.body['password-confirm']) {
-    return next();
-  }
-  
-  req.flash('error', 'Passwords do not match!');
-  res.redirect('back');
-
-};
-
-/**
  * Password validator
  */
 exports.validatePasswords = (req, res, next) => {
