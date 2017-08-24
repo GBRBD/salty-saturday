@@ -29,7 +29,7 @@ router.get('/logout', authController.logout);
 
 // Shows the create story page
 // TODO: Before showing the story form, check if the user is authenticated
-router.get('/add', authMiddleware.isLoggedIn, storyController.addStory);
+router.get('/add', userMiddleware.isLoggedIn, storyController.addStory);
 // Creates a new story
 router.post('/add', catchErrors(storyController.createStory));
 // We need to edit the story. See more at '_storyForm.pug' form action.
