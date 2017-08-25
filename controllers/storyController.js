@@ -16,7 +16,7 @@ exports.createStory = async (req, res) => {
   const story = await (new Story(req.body)).save();
   req.flash('success', `Successfully Created.`);
   // TODO: Redirect to the created story
-  res.redirect(`/story/${story._id}`);
+  res.redirect(`/reee/${story._id}`);
 };
 
 /**

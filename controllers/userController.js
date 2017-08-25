@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Story = mongoose.model('Story');
 
 const promisify = require('es6-promisify');
 const crypto = require('crypto');
@@ -119,14 +120,24 @@ exports.saveSettings = (req, res) => { res.send("punci") };
 exports.saveNewPassword = async (req, res) => {
 
     const user = await User.findOne({ _id: req.user.id })
-    
+
     const setPassword = promisify(user.setPassword, user);
     await setPassword(req.body.password);
-    
+
     const updatedUser = await user.save();
     await req.login(updatedUser);
 
     req.flash('success', 'Success!');
     res.redirect('/settings');
 
+};
+
+/**
+ * User profile, with the user's posts
+ */
+exports.userProfile = async (req, res) => {
+    const username = req.params.username;
+    const user = await User.findOne({ username: username });
+    const stories = await Story.find({ author: user._id });
+    res.render('stories/stories', {title: `${user.username}'s salt`, stories});
 };
