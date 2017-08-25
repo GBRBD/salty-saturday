@@ -27,8 +27,6 @@ router.get('/register',
     userController.registerForm);
 router.post('/register',
     userMiddleware.validateRegister,
-    catchErrors(userMiddleware.isUsernameExist),
-    catchErrors(userMiddleware.isEmailExist),
     catchErrors(userController.register),
     authController.login
 );
@@ -57,10 +55,8 @@ router.get('/logout', authController.logout);
 // Account edit
 router.get('/settings', catchErrors(userController.settings));
 router.post('/settings/email',
-
-    userController.saveSettings);
+    catchErrors(userController.saveEmail));
 router.post('/settings/password',
-    userMiddleware.isLoggedIn,
     userMiddleware.validatePasswords,
     catchErrors(userController.saveNewPassword));
 

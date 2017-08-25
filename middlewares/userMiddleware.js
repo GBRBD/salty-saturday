@@ -54,7 +54,7 @@ exports.validatePasswords = (req, res, next) => {
  */
 exports.validateRegister = (req, res, next) => {
 
-  req.sanitizeBody('name');
+  req.sanitizeBody('username');
   req.sanitizeBody('email').normalizeEmail({
     remove_dots: false,
     remove_extension: false,
@@ -78,36 +78,3 @@ exports.validateRegister = (req, res, next) => {
   return next(); // there were no errors!
 
 };
-
-/**
- * Is username already exist?
- */
-exports.isUsernameExist = async (req, res, next) => {
-
-  const user = await User.findOne({ username: req.body.username });
-
-  if (user) {
-    req.flash('error', 'This username is already taken!');
-    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
-  }
-
-  return next();
-
-}
-
-/**
- * Is email already exist?
- */
-exports.isEmailExist = async (req, res, next) => {
-
-  const user = await User.findOne({ email: req.body.email });
-
-  if (user) {
-    req.flash('error', "This email address is already taken!");
-    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
-    return;
-  }
-
-  return next();
-
-}

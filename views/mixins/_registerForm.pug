@@ -4,9 +4,9 @@ mixin registerForm()
       form.form(action="/register" method="POST")
             h2 Register
             label(for="username") Username
-            input(type="text" name="username" value=body ? body.username : "")
+            input(type="text" name="username" id="username" value=body ? body.username : "")
             label(for="email") Email
-            input(type="text" name="email" value=body ? body.email : "")
+            input(type="email" name="email" id="email" value=body ? body.email : "")
             +password()
             p By sign up cond und terms und stuff ...
             input(type="submit" value="Sign up!")

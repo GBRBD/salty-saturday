@@ -24,6 +24,7 @@ exports.registerForm = (req, res) => {
  */
 exports.register = async (req, res, next) => {
     const user = new User({ username: req.body.username, email: req.body.email });
+    console.log(user);
     const register = promisify(User.register, User);
     await register(user, req.body.password);
     next(); // pass to authController.login
@@ -114,19 +115,34 @@ exports.settings = async (req, res) => {
     res.render('profile/settings', { title: 'Settings' });
 };
 
-exports.saveSettings = (req, res) => { res.send("punci") };
+exports.saveEmail = async (req, res) => {
+
+    const updates = {
+        email: req.body.email
+    };
+   
+    const user = await User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $set: updates },
+        { new: true, runValidators: true, context: 'query' }
+    );
+
+    req.flash('success', 'Updated the profile!');
+    res.redirect('back');
+
+};
 
 exports.saveNewPassword = async (req, res) => {
 
-    const user = await User.findOne({ _id: req.user.id })
-    
+    const user = await User.findOne({ _id: req.user.id });
+
     const setPassword = promisify(user.setPassword, user);
     await setPassword(req.body.password);
-    
+
     const updatedUser = await user.save();
     await req.login(updatedUser);
 
     req.flash('success', 'Success!');
-    res.redirect('/settings');
+    res.redirect('settings');
 
 };
