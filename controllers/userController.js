@@ -149,11 +149,31 @@ exports.saveNewPassword = async (req, res) => {
 };
 
 /**
+ * User profile overview
+ */
+exports.userOverview = async (req, res) => {
+    const username = req.params.username;
+    const user = await User.findOne({ username: username });
+    res.render('profile/profile', {title: `${user.username}'s salt`, user});
+};
+
+/**
  * User profile, with the user's posts
  */
-exports.userProfile = async (req, res) => {
+exports.userPosts = async (req, res) => {
     const username = req.params.username;
     const user = await User.findOne({ username: username });
     const stories = await Story.find({ author: user._id });
     res.render('stories/stories', {title: `${user.username}'s salt`, stories});
 };
+
+/**
+ * User upvotes
+ */
+exports.userUpvotes = async (req, res) => {
+    const username = req.params.username;
+    const user = await User.findOne({ username: username });
+    const stories = await Story.find({ upvotes: user._id });
+    res.render('stories/stories', {title: `${user.username}'s upvotes`, stories});
+};
+

@@ -24,7 +24,10 @@ const storySchema = new Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User',
         required: 'You must supply an author!'
-    }
+    },
+    upvotes: [
+        { type: mongoose.Schema.ObjectId, ref: 'User' }
+    ]
     // TODO: Max Lenght Validation
 });
 
@@ -33,13 +36,12 @@ function autopopulate(next) {
     next();
 }
 
-
 /**
  * This populates the author field with the user schema. 
  * If you dump the store value in the 'getStoryById' controller method, you can see it.
  */
 storySchema.pre('find', autopopulate);
 // I dont know what this does
-storySchema.pre('findOne', autopopulate); 
+storySchema.pre('findOne', autopopulate);
 
 module.exports = mongoose.model('Story', storySchema);

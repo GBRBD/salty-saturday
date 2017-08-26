@@ -20,8 +20,8 @@ html(lang="en")
           span Logout
         li: a(href="/settings")
           span Settings
-        span You are logged in as 
-          a(href=`/p/${user.username}`) #{user.username}
+        p You are logged in as 
+          a(href=`/u/${user.username}`) #{user.username}
       else
         li: a(href="/register") Register
         li: a(href="/login") Login
@@ -35,6 +35,7 @@ html(lang="en")
       block content
 
       block footer
+      <hr>
         each item in h.footermenu
           li
             a(href=item.slug)

@@ -66,3 +66,23 @@ exports.updateStory = async (req, res) => {
   req.flash('success', 'You\'ve successfully updated your salty story!');
   res.redirect(`/reee/${story._id}`);
 };
+
+/**
+ * Upvote a story
+ */
+exports.upvoteStory = async (req, res) => {
+  // The user id type is ObjectId you need to convert it to string.
+  const userId = req.user._id.toString();
+  const story = await Story.findById({_id:req.params.id});
+  const upvotes = story.upvotes.map(obj=>obj.toString());
+  const operator = upvotes.includes(userId) ? '$pull' : '$addToSet';
+  
+  const upvote = await Story.
+    findByIdAndUpdate(
+      {_id: req.params.id}, 
+      { [operator]: { upvotes: req.user._id}}, 
+      {new: true} 
+    );
+
+  res.json(upvote);
+};

@@ -32,7 +32,15 @@ router.get('/hallofsalt', testController.test);
 router.get('/reee/:id', catchErrors(storyController.getStoryById));
 
 // User profile with the user's stories
-router.get('/p/:username', catchErrors(userController.userProfile));
+router.get('/u/:username', catchErrors(userController.userOverview));
+
+// User's posts
+router.get('/u/:username/reees',catchErrors(userController.userPosts));
+// User's upvotes
+router.get('/u/:username/upvotes', userController.userUpvotes);
+// User's comments
+router.get('/u/:username/comments', testController.test);
+
 
 /**
  * Auth
@@ -73,6 +81,7 @@ router.get('/logout', authController.logout);
 /**
  * Account settings
  */
+
 // Account edit
 router.use('/settings', userMiddleware.isLoggedIn);
 router.get('/settings', catchErrors(userController.settings));
@@ -84,6 +93,7 @@ router.post('/settings/password',
 /**
  * Story creating and editing
  */
+
 router.use('/add', userMiddleware.isLoggedIn);
 
 router.get('/add', storyController.addStory);
@@ -104,5 +114,14 @@ router.get('/faq', pagesController.faq);
 router.get('/contact', testController.test);
 // Feature Request
 router.get('/featurereq', testController.test);
+
+/**
+ * API
+ */
+
+router.use('/api/stories/:id/upvote', userMiddleware.isLoggedIn);
+
+// Upvote API
+router.post('/api/stories/:id/upvote', catchErrors(storyController.upvoteStory));
 
 module.exports = router;
