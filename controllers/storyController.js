@@ -31,7 +31,7 @@ exports.getHotStories = async (req, res) => {
  * Return a story by the given id
  */
 exports.getStoryById = async (req, res, next) => {
-  const story = await Story.findById({ _id: req.params.id }).populate('author');
+  const story = await Story.findById({ _id: req.params.id });
   if (!story) return next(); // !story = 404
   res.render('stories/story', { title: story.title, story });
 };
@@ -64,5 +64,5 @@ exports.updateStory = async (req, res) => {
   }).exec();
   // Redriect to the story and tell it worked
   req.flash('success', 'You\'ve successfully updated your salty story!');
-  res.redirect(`/story/${story._id}`);
+  res.redirect(`/reee/${story._id}`);
 };
