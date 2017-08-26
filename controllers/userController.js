@@ -152,7 +152,7 @@ exports.saveNewPassword = async (req, res) => {
     await req.login(updatedUser);
 
     req.flash('success', 'Updated the password!');
-    res.redirect('settings');
+    res.redirect('back');
 
 };
 
