@@ -112,7 +112,7 @@ router.post('/add/:id', catchErrors(storyController.updateStory));
 router.get('/stories/:id/edit', storyController.editStory);
 
 // Render out the edit form so the user can update their story
-router.post('/stories/:id/delete', storyController.deleteStory)
+router.post('/stories/:id/delete', catchErrors(storyController.deleteStory));
 
 
 /**

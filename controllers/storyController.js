@@ -71,23 +71,22 @@ exports.updateStory = async (req, res) => {
  * Delete a story
  */
 exports.deleteStory = async (req, res) => {
+   // 1. Find the story by given the ID
+   const story = await Story.findOne({ _id: req.params.id });
+
+   if (req.user === undefined || !story.author.equals(req.user._id)) {
+     // req.flash('error', 'You are not the author of this story!');
+     res.redirect('/');
+     return;
+   }
+  
+   // Delete story
+   await story.remove(); 
  
-  // 1. Find the story by given the ID
-  const story = await Story.findOne({ _id: req.params.id });
-
-  if (req.user === undefined || !story.author.equals(req.user._id)) {
-    // req.flash('error', 'You are not the author of this story!');
-    res.redirect('/');
-    return;
-  }
-
-  // Delete story
-  await story.remove(); 
-
-  // Redriect to the story and tell it worked
-  req.flash('success', 'You\'ve successfully deleted your salty story!');
-  res.redirect('/');
-};
+   // Redriect to the story and tell it worked
+   req.flash('success', 'You\'ve successfully deleted your salty story!');
+   res.redirect('/');
+ };
 
 /**
  * Upvote a story

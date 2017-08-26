@@ -176,7 +176,7 @@ exports.userPosts = async (req, res) => {
 };
 
 /**
- * User upvotes
+ * User's upvotes
  */
 exports.userUpvotes = async (req, res) => {
     const username = req.params.username;
