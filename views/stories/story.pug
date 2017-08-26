@@ -11,7 +11,7 @@ block content
     form(action=`/stories/${story._id}/delete` method="POST")
       button(type="submit" name="delete") Delete
   p= story.story
-  form(action=`/api/stories/${story._id}/upvote` method="POST")
+  form.upvote(action=`/api/stories/${story._id}/upvote` method="POST")
     button(type="submit" name="upvote") Upvote
   //- Salty points 
   //- Comments
