@@ -6,6 +6,7 @@ block content
   li: a(href=`/u/${user.username}/reees`) Salty Stories
   li: a(href=`/u/${user.username}/upvotes`) Upvotes
   li: a(href=`/u/${user.username}/comments`) Comments
+  hr
   
   each story in stories
     +storyCard(story)

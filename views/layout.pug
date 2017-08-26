@@ -27,7 +27,7 @@ html(lang="en")
         li: a(href="/login") Login
         li: a(href="/reset") Forgot your shit?
 
-      <hr>
+      hr
       
     +flash()
 
@@ -35,7 +35,6 @@ html(lang="en")
       block content
 
       block footer
-      <hr>
         each item in h.footermenu
           li
             a(href=item.slug)
