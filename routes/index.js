@@ -2,15 +2,17 @@ const express = require('express');
 const router = express.Router();
 const { catchErrors } = require('../handlers/errorHandlers');
 
+// Middlewares
+
 const userMiddleware = require('../middlewares/userMiddleware');
+
+// Controllers
 
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const storyController = require('../controllers/storyController');
 const testController = require('../controllers/testController');
 const pagesController = require('../controllers/pagesController');
-
-// Controllers
 
 /**
  * Stories
@@ -36,10 +38,10 @@ router.get('/p/:username', catchErrors(userController.userProfile));
  * Auth
  */
 
+router.use('/register', userMiddleware.shouldNotBeLoggedIn);
+
 // Register
-router.get('/register',
-    userMiddleware.shouldNotBeLoggedIn,
-    userController.registerForm);
+router.get('/register', userController.registerForm);
 
 router.post('/register',
     userMiddleware.validateRegister,
@@ -47,23 +49,20 @@ router.post('/register',
     authController.login
 );
 
+router.use('/login', userMiddleware.shouldNotBeLoggedIn);
+router.use('/reset', userMiddleware.shouldNotBeLoggedIn);
+
 // Log in
-router.get('/login',
-    userMiddleware.shouldNotBeLoggedIn,
-    userController.loginForm);
-    
+router.get('/login', userController.loginForm);
 router.post('/login', authController.login);
 
 // Claiming new password
-router.get('/reset',
-    userMiddleware.shouldNotBeLoggedIn,
-    userController.forgotForm);
-
+router.get('/reset', userController.forgotForm);
 router.post('/reset', catchErrors(userController.forgot));
 
 // Reset flow
+router.use('/account/new-password/:token', userMiddleware.shouldNotBeLoggedIn);
 router.get('/account/new-password/:token', catchErrors(userController.reset));
-
 router.post('/account/new-password/:token',
     userMiddleware.validatePasswords,
     catchErrors(userController.setNewPassword));
@@ -75,10 +74,9 @@ router.get('/logout', authController.logout);
  * Account settings
  */
 // Account edit
+router.use('/settings', userMiddleware.isLoggedIn);
 router.get('/settings', catchErrors(userController.settings));
-
 router.post('/settings/email', userController.saveSettings);
-
 router.post('/settings/password',
     userMiddleware.validatePasswords,
     catchErrors(userController.saveNewPassword));
@@ -86,12 +84,13 @@ router.post('/settings/password',
 /**
  * Story creating and editing
  */
-router.get('/add', userMiddleware.isLoggedIn, storyController.addStory);
+router.use('/add', userMiddleware.isLoggedIn);
+
+router.get('/add', storyController.addStory);
 // Creates a new story
 router.post('/add', catchErrors(storyController.createStory));
 // We need to edit the story. See more at '_storyForm.pug' form action.
 router.post('/add/:id', catchErrors(storyController.updateStory));
-
 // Render out the edit form so the user can update their story
 router.get('/stories/:id/edit', storyController.editStory);
 
