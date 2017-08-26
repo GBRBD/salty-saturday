@@ -121,15 +121,23 @@ exports.saveEmail = async (req, res) => {
     const updates = {
         email: req.body.email
     };
-   
+
+    // I don't have the mood for this shit
+    // TODO: refact the mongoose error
     const user = await User.findOneAndUpdate(
         { _id: req.user.id },
         { $set: updates },
-        { new: true, runValidators: true, context: 'query' }
+        { new: true, runValidators: true, context: 'query' },
+        (dbResponse) => {
+            if (dbResponse && dbResponse.code == 11000) {
+                req.flash('success', 'This email address is already taken!');
+                res.redirect('back');             
+            } else {
+                req.flash('success', 'Updated the email!');
+                res.redirect('back');
+            }
+        }
     );
-
-    req.flash('success', 'Updated the profile!');
-    res.redirect('back');
 
 };
 
@@ -143,7 +151,7 @@ exports.saveNewPassword = async (req, res) => {
     const updatedUser = await user.save();
     await req.login(updatedUser);
 
-    req.flash('success', 'Success!');
+    req.flash('success', 'Updated the password!');
     res.redirect('settings');
 
 };
@@ -154,7 +162,7 @@ exports.saveNewPassword = async (req, res) => {
 exports.userOverview = async (req, res) => {
     const username = req.params.username;
     const user = await User.findOne({ username: username });
-    res.render('profile/profile', {title: `${user.username}'s salt`, user});
+    res.render('profile/profile', { title: `${user.username}'s salt`, user });
 };
 
 /**
@@ -164,7 +172,7 @@ exports.userPosts = async (req, res) => {
     const username = req.params.username;
     const user = await User.findOne({ username: username });
     const stories = await Story.find({ author: user._id });
-    res.render('stories/stories', {title: `${user.username}'s salt`, stories});
+    res.render('stories/stories', { title: `${user.username}'s salt`, stories });
 };
 
 /**
@@ -174,6 +182,6 @@ exports.userUpvotes = async (req, res) => {
     const username = req.params.username;
     const user = await User.findOne({ username: username });
     const stories = await Story.find({ upvotes: user._id });
-    res.render('stories/stories', {title: `${user.username}'s upvotes`, stories});
+    res.render('stories/stories', { title: `${user.username}'s upvotes`, stories });
 };
 

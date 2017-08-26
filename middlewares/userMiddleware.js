@@ -50,6 +50,25 @@ exports.validatePasswords = (req, res, next) => {
 }
 
 /**
+ * Email validator
+ */
+exports.validateEmail = (req, res, next) => {
+  req.sanitizeBody('email').normalizeEmail({
+    remove_dots: false,
+    remove_extension: false,
+    gmail_remove_subaddress: false
+  });
+  req.checkBody('email', 'That email is not valid!').isEmail();
+  const errors = req.validationErrors();
+  if (errors) {
+    req.flash('error', errors.map(err => err.msg));
+    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    return; // stop the fn from running
+  }
+  return next();
+}
+
+/**
  * Register form validation
  */
 exports.validateRegister = (req, res, next) => {
