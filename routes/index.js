@@ -76,7 +76,7 @@ router.get('/logout', authController.logout);
 // Account edit
 router.use('/settings', userMiddleware.isLoggedIn);
 router.get('/settings', catchErrors(userController.settings));
-router.post('/settings/email', userController.saveSettings);
+router.post('/settings/email', userController.saveEmail);
 router.post('/settings/password',
     userMiddleware.validatePasswords,
     catchErrors(userController.saveNewPassword));
