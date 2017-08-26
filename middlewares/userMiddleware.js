@@ -32,13 +32,13 @@ exports.shouldNotBeLoggedIn = (req, res, next) => {
  * Password validator
  */
 exports.validatePasswords = (req, res, next) => {
-  
+
   req.checkBody('password', 'You must supply a password between 6 and 18 characters!').isLength({ min: 6, max: 18 });
   req.checkBody('password-confirm', 'Confirmed Password cannot be blank!').notEmpty();
   req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);
-  
+
   const errors = req.validationErrors();
-  
+
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
     res.redirect('back');
@@ -68,7 +68,7 @@ exports.validateRegister = (req, res, next) => {
   req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);
 
   const errors = req.validationErrors();
-  
+
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
     res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
@@ -78,3 +78,36 @@ exports.validateRegister = (req, res, next) => {
   return next(); // there were no errors!
 
 };
+
+/**
+ * Is username already exist?
+ */
+exports.isUsernameExist = async (req, res, next) => {
+
+  const user = await User.findOne({ username: req.body.username });
+
+  if (user) {
+    req.flash('error', 'This username is already taken!');
+    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+  }
+
+  return next();
+
+}
+
+/**
+ * Is email already exist?
+ */
+exports.isEmailExist = async (req, res, next) => {
+
+  const user = await User.findOne({ email: req.body.email });
+
+  if (user) {
+    req.flash('error', "This email address is already taken!");
+    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    return;
+  }
+
+  return next();
+
+}

@@ -53,6 +53,8 @@ router.get('/register', userController.registerForm);
 
 router.post('/register',
     userMiddleware.validateRegister,
+    userMiddleware.isUsernameExist,    
+    userMiddleware.isEmailExist,
     catchErrors(userController.register),
     authController.login
 );
