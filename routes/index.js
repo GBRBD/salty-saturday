@@ -135,6 +135,6 @@ router.get('/featurereq', testController.test);
 router.use('/api/stories/:id/upvote', userMiddleware.isLoggedIn);
 
 // Upvote API
-router.post('/api/stories/:id/upvote', catchErrors(storyController.upvoteStory));
+router.post('/api/stories/:id/upvote', userMiddleware.isLoggedIn, catchErrors(storyController.upvoteStory));
 
 module.exports = router;
