@@ -1,5 +1,7 @@
 extends ../layout
 
+block scripts
+
 block content
   h2= story.title
   a(href=`/u/${story.author.username}`) #{story.author.username}
@@ -15,3 +17,4 @@ block content
   //- Report
   //- Share
   //- Upvote
+  #comment-root
