@@ -1,6 +1,7 @@
 extends ../layout
 
 block scripts
+  script(src="/dist/comment.bundle.js")
 
 block content
   h2= story.title
@@ -21,3 +22,4 @@ block content
   //- Share
   //- Upvote
   #comment-root
+    comment

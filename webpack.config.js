@@ -12,14 +12,19 @@ const autoprefixer = require('autoprefixer');
   We only have a single entry point (a .js file) and everything is required from that js file
 */
 
-// This is our JavaScript rule that specifies what to do with .js files
-const javascript = {
+// This is our JavaScript rule that specifies what to do with .js files 
+const js = {
   test: /\.(js)$/, // see how we match anything that ends in `.js`? Cool
   use: [{
     loader: 'babel-loader',
     options: { presets: ['es2015'] } // this is one way of passing options
   }],
 };
+
+const vue = {
+  test: /\.vue$/,
+  loader: 'vue-loader'
+}
 
 /*
   This is our postCSS loader which gets fed into the next loader. I'm setting it up in it's own variable because its a didgeridog
@@ -50,7 +55,8 @@ const uglify = new webpack.optimize.UglifyJsPlugin({ // eslint-disable-line
 const config = {
   entry: {
     // we only have 1 entry, but I've set it up for multiple in the future
-    App: './public/js/app.js'
+    app: './public/js/app.js',
+    comment: './public/js/comment/comment.js'
   },
   // we're using sourcemaps and here is where we specify which kind of sourcemap to use
   devtool: 'source-map',
@@ -66,14 +72,19 @@ const config = {
 
   // remember we said webpack sees everthing as modules and how different loaders are responsible for different file types? Here is is where we implement them. Pass it the rules for our JS and our styles
   module: {
-    rules: [javascript, styles]
+    rules: [js, vue, styles]
   },
   // finally we pass it an array of our plugins - uncomment if you want to uglify
   // plugins: [uglify]
   plugins: [
     // here is where we tell it to output our css to a separate file
     new ExtractTextPlugin('style.css'),
-  ]
+  ],
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
+    }
+  }
 };
 // webpack is cranky about some packages using a soon to be deprecated API. shhhhhhh
 process.noDeprecation = true;

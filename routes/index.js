@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const { catchErrors } = require('../handlers/errorHandlers');
 
 // Middlewares
@@ -36,7 +37,7 @@ router.get('/reee/:id', catchErrors(storyController.getStoryById));
 router.get('/u/:username', catchErrors(userController.userOverview));
 
 // User's posts
-router.get('/u/:username/reees',catchErrors(userController.userPosts));
+router.get('/u/:username/reees', catchErrors(userController.userPosts));
 
 // User's upvotes
 router.get('/u/:username/upvotes', userController.userUpvotes);
@@ -54,7 +55,7 @@ router.use('/register', userMiddleware.shouldNotBeLoggedIn);
 router.get('/register', userController.registerForm);
 router.post('/register',
     userMiddleware.validateRegister,
-    userMiddleware.isUsernameExist,    
+    userMiddleware.isUsernameExist,
     userMiddleware.isEmailExist,
     catchErrors(userController.register),
     authController.login

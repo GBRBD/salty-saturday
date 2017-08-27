@@ -31,9 +31,12 @@ exports.getHotStories = async (req, res) => {
  * Return a story by the given id
  */
 exports.getStoryById = async (req, res, next) => {
+
   const story = await Story.findById({ _id: req.params.id });
   if (!story) return next(); // !story = 404
+
   res.render('stories/story', { title: story.title, story });
+  
 };
 
 /**
@@ -71,22 +74,22 @@ exports.updateStory = async (req, res) => {
  * Delete a story
  */
 exports.deleteStory = async (req, res) => {
-   // 1. Find the story by given the ID
-   const story = await Story.findOne({ _id: req.params.id });
+  // 1. Find the story by given the ID
+  const story = await Story.findOne({ _id: req.params.id });
 
-   if (req.user === undefined || !story.author.equals(req.user._id)) {
-     // req.flash('error', 'You are not the author of this story!');
-     res.redirect('/');
-     return;
-   }
-  
-   // Delete story
-   await story.remove(); 
- 
-   // Redriect to the story and tell it worked
-   req.flash('success', 'You\'ve successfully deleted your salty story!');
-   res.redirect('/');
- };
+  if (req.user === undefined || !story.author.equals(req.user._id)) {
+    // req.flash('error', 'You are not the author of this story!');
+    res.redirect('/');
+    return;
+  }
+
+  // Delete story
+  await story.remove();
+
+  // Redriect to the story and tell it worked
+  req.flash('success', 'You\'ve successfully deleted your salty story!');
+  res.redirect('/');
+};
 
 /**
  * Upvote a story
@@ -94,15 +97,15 @@ exports.deleteStory = async (req, res) => {
 exports.upvoteStory = async (req, res) => {
   // The user id type is ObjectId you need to convert it to string.
   const userId = req.user._id.toString();
-  const story = await Story.findById({_id:req.params.id});
-  const upvotes = story.upvotes.map(obj=>obj.toString());
+  const story = await Story.findById({ _id: req.params.id });
+  const upvotes = story.upvotes.map(obj => obj.toString());
   const operator = upvotes.includes(userId) ? '$pull' : '$addToSet';
-  
+
   const upvote = await Story.
     findByIdAndUpdate(
-      {_id: req.params.id}, 
-      { [operator]: { upvotes: req.user._id}}, 
-      {new: true} 
+    { _id: req.params.id },
+    { [operator]: { upvotes: req.user._id } },
+    { new: true }
     );
 
   res.json(upvote);
