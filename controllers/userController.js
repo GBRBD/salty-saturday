@@ -161,8 +161,9 @@ exports.saveNewPassword = async (req, res) => {
  */
 exports.userOverview = async (req, res) => {
     const username = req.params.username;
-    const user = await User.findOne({ username: username });
-    res.render('profile/profile', { title: `${user.username}'s salt`, user });
+    const author = await User.findOne({ username: username });
+    res.render('profile/profile', { title: `${author.username}'s profile`, author });
+    
 };
 
 /**
@@ -170,18 +171,19 @@ exports.userOverview = async (req, res) => {
  */
 exports.userPosts = async (req, res) => {
     const username = req.params.username;
-    const user = await User.findOne({ username: username });
-    const stories = await Story.find({ author: user._id });
-    res.render('profile/profileStories', { title: `${user.username}'s salt`, stories });
+    const author = await User.findOne({ username: username });
+    const stories = await Story.find({ author: author._id });
+    res.render('profile/profileStories', { title: `${author.username}'s salt`, stories, author });
 };
+
 
 /**
  * User's upvotes
  */
 exports.userUpvotes = async (req, res) => {
     const username = req.params.username;
-    const user = await User.findOne({ username: username });
-    const stories = await Story.find({ upvotes: user._id });
-    res.render('profile/profileStories', { title: `${user.username}'s upvotes`, stories });
+    const author = await User.findOne({ username: username });
+    const stories = await Story.find({ upvotes: author._id });
+    res.render('profile/profileStories', { title: `${author.username}'s upvotes`,stories, author });
 };
 

@@ -39,7 +39,7 @@ router.get('/u/:username', catchErrors(userController.userOverview));
 router.get('/u/:username/reees',catchErrors(userController.userPosts));
 
 // User's upvotes
-router.get('/u/:username/upvotes', userController.userUpvotes);
+router.get('/u/:username/upvotes', catchErrors(userController.userUpvotes));
 
 // User's comments
 router.get('/u/:username/comments', testController.test);
