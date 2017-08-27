@@ -172,16 +172,16 @@ exports.userPosts = async (req, res) => {
     const username = req.params.username;
     const user = await User.findOne({ username: username });
     const stories = await Story.find({ author: user._id });
-    res.render('stories/stories', { title: `${user.username}'s salt`, stories });
+    res.render('profile/profileStories', { title: `${user.username}'s salt`, stories });
 };
 
 /**
- * User upvotes
+ * User's upvotes
  */
 exports.userUpvotes = async (req, res) => {
     const username = req.params.username;
     const user = await User.findOne({ username: username });
     const stories = await Story.find({ upvotes: user._id });
-    res.render('stories/stories', { title: `${user.username}'s upvotes`, stories });
+    res.render('profile/profileStories', { title: `${user.username}'s upvotes`, stories });
 };
 

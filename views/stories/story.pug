@@ -9,8 +9,11 @@ block content
   //- Only the author can edit the story
   if user && story.author.equals(user._id)
     a(href=`/stories/${story._id}/edit`) Edit
+  if user && story.author.equals(user._id)
+    form(action=`/stories/${story._id}/delete` method="POST")
+      button(type="submit" name="delete") Delete
   p= story.story
-  form(action=`/api/stories/${story._id}/upvote` method="POST")
+  form.upvote(action=`/api/stories/${story._id}/upvote` method="POST")
     button(type="submit" name="upvote") Upvote
   //- Salty points 
   //- Comments

@@ -23,6 +23,7 @@ router.get('/', storyController.getHotStories);
 router.get('/hot', storyController.getHotStories);
 
 // Daily top
+
 router.get('/top', testController.test);
 
 // Hall of Salt
@@ -36,11 +37,12 @@ router.get('/u/:username', catchErrors(userController.userOverview));
 
 // User's posts
 router.get('/u/:username/reees',catchErrors(userController.userPosts));
+
 // User's upvotes
 router.get('/u/:username/upvotes', userController.userUpvotes);
+
 // User's comments
 router.get('/u/:username/comments', testController.test);
-
 
 /**
  * Auth
@@ -50,7 +52,6 @@ router.use('/register', userMiddleware.shouldNotBeLoggedIn);
 
 // Register
 router.get('/register', userController.registerForm);
-
 router.post('/register',
     userMiddleware.validateRegister,
     userMiddleware.isUsernameExist,    
@@ -93,18 +94,26 @@ router.post('/settings/password',
     catchErrors(userController.saveNewPassword));
 
 /**
- * Story creating and editing
+ * Story creating, editing and deleting
  */
 
 router.use('/add', userMiddleware.isLoggedIn);
 
+// Render out the add form
 router.get('/add', storyController.addStory);
+
 // Creates a new story
 router.post('/add', catchErrors(storyController.createStory));
+
 // We need to edit the story. See more at '_storyForm.pug' form action.
 router.post('/add/:id', catchErrors(storyController.updateStory));
+
 // Render out the edit form so the user can update their story
 router.get('/stories/:id/edit', storyController.editStory);
+
+// Render out the edit form so the user can update their story
+router.post('/stories/:id/delete', catchErrors(storyController.deleteStory));
+
 
 /**
  * Pages
@@ -112,8 +121,10 @@ router.get('/stories/:id/edit', storyController.editStory);
 
 // FAQ
 router.get('/faq', pagesController.faq);
+
 // Contact
 router.get('/contact', testController.test);
+
 // Feature Request
 router.get('/featurereq', testController.test);
 

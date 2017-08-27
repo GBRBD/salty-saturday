@@ -7,9 +7,13 @@ mixin storyCard( story = {} )
   //- Only the author can edit the story
   if user && story.author.equals(user._id)
     a(href=`/stories/${story._id}/edit`) Edit 
+  //- Only the author can delete the story
+  if user && story.author.equals(user._id)
+    form(action=`/stories/${story._id}/delete` method="POST")
+      button(type="submit" name="delete") Delete
   p= story.story.split(' ').slice(0, 25).join(' ')
 
-  form(action=`/api/stories/${story._id}/upvote` method="POST")
+  form.upvote(action=`/api/stories/${story._id}/upvote` method="POST")
     button(type="submit" name="upvote") Upvote
   //- Report
   //- Share
