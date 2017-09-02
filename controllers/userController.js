@@ -7,6 +7,19 @@ const crypto = require('crypto');
 const mail = require('../handlers/mail');
 
 /**
+ * Profile Picture Upload
+ */
+exports.uploadProfilePicture = async (req, res, next) => {
+    const user = await User.findOneAndUpdate(
+        {_id: req.user._id},
+        {photo: req.body.photo} ,
+        {new: true}
+    ).exec();
+    res.redirect(`back`);
+};
+
+
+/**
  * Login page
  */
 exports.loginForm = (req, res) => {

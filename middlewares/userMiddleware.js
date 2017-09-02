@@ -8,7 +8,6 @@ const User = mongoose.model('User');
 /**
  * Check is user logged in
  */
-
 function checkAuth(req) {
   return req.isAuthenticated();
 }

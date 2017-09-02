@@ -5,7 +5,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 // Middlewares
 
 const userMiddleware = require('../middlewares/userMiddleware');
-
+const pictureMiddleware = require('../middlewares/pictureMiddleware');
 // Controllers
 
 const authController = require('../controllers/authController');
@@ -93,6 +93,12 @@ router.post('/settings/password',
     userMiddleware.validatePasswords,
     catchErrors(userController.saveNewPassword));
 
+// Profile picture upload
+router.post('/settings/profilepic', 
+    pictureMiddleware.upload,
+    catchErrors(pictureMiddleware.resize),
+    catchErrors(userController.uploadProfilePicture)
+);
 /**
  * Story creating, editing and deleting
  */
