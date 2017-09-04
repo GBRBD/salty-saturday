@@ -12,9 +12,6 @@ mixin storyCard( story = {} )
     form(action=`/stories/${story._id}/delete` method="POST")
       button(type="submit" name="delete") Delete
   p= story.story.split(' ').slice(0, 25).join(' ')
-
-  form.upvote(action=`/api/stories/${story._id}/upvote` method="POST")
-    button(type="submit" name="upvote") Upvote
   //- Report
   //- Share
   //- Comments

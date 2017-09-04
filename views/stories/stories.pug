@@ -3,5 +3,11 @@ extends ../layout
 include ../mixins/_storyCard
 
 block content
-  each story in stories
-    +storyCard(story)
+  
+  if (!h.isSaturday)
+    block scripts
+      script(src="/dist/counter.bundle.js")
+    p Sorry, bitch
+  else
+      each story in stories
+        +storyCard(story)

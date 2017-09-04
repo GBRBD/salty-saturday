@@ -3,4 +3,7 @@ extends ../layout
 include ../mixins/_storyForm
 
 block content
-  +storyForm(story)
+  if (!h.isSaturday)
+    p Sorry, bitch
+  else
+    +storyForm(story)

@@ -57,6 +57,7 @@ const config = {
     // we only have 1 entry, but I've set it up for multiple in the future
     app: './public/js/app.js',
     story: './public/js/story.js',
+    counter: './public/js/counter.js',
     comment: './public/js/comment/comment.js'
   },
   // we're using sourcemaps and here is where we specify which kind of sourcemap to use
