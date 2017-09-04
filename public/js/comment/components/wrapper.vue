@@ -67,7 +67,7 @@ export default {
 			})
 			axiosPoll.get(`/api/stories/polling/${this.id}`)
 			.then(function(response) {
-				if (response.data != {}) {
+				if (response.data.comment._id) { // if we have a new message
 					self.comments.unshift(response.data.comment)
 				}
 				self.poll()
