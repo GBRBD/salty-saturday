@@ -22,6 +22,7 @@ html(lang="en")
           span Settings
         p You are logged in as 
           a(href=`/u/${user.username}`) #{user.username}
+          img(src=`/uploads/${user.photo || 'salt.jpg'}` height="76" width="auto")
       else
         li: a(href="/register") Register
         li: a(href="/login") Login

@@ -8,6 +8,11 @@ block content
         input(type="email" name="email" id="email" value=user.email)
         input(type="submit" value="Change my email")
     hr
+    form(action="/settings/profilepic" method="POST" enctype="multipart/form-data")
+        label(for="profilepic") Profile Picture
+        input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+        input(type="submit" value="Set Profile Picture")
+    hr
     form(action="/settings/password" method="POST")
         +password()
         input(type="submit" value="Change my password")

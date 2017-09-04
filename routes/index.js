@@ -6,7 +6,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 // Middlewares
 
 const userMiddleware = require('../middlewares/userMiddleware');
-
+const pictureMiddleware = require('../middlewares/pictureMiddleware');
 // Controllers
 
 const apiController = require('../controllers/apiController');
@@ -41,7 +41,7 @@ router.get('/u/:username', catchErrors(userController.userOverview));
 router.get('/u/:username/reees', catchErrors(userController.userPosts));
 
 // User's upvotes
-router.get('/u/:username/upvotes', userController.userUpvotes);
+router.get('/u/:username/upvotes', catchErrors(userController.userUpvotes));
 
 // User's comments
 router.get('/u/:username/comments', testController.test);
@@ -95,6 +95,12 @@ router.post('/settings/password',
     userMiddleware.validatePasswords,
     catchErrors(userController.saveNewPassword));
 
+// Profile picture upload
+router.post('/settings/profilepic', 
+    pictureMiddleware.upload,
+    catchErrors(pictureMiddleware.resize),
+    catchErrors(userController.uploadProfilePicture)
+);
 /**
  * Story creating, editing and deleting
  */

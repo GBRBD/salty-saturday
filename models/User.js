@@ -21,6 +21,7 @@ const userSchema = new Schema({
         trim: true,
         required: 'Please Supply an email address'
     },
+    photo: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date
 });
