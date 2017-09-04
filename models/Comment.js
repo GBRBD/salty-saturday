@@ -18,6 +18,7 @@ const commentSchema = new mongoose.Schema({
   },
   text: {
     type: String,
+    trim: true,
     required: 'Your comment must have text!'
   }
 });
@@ -30,4 +31,4 @@ function autopopulate(next) {
 commentSchema.pre('find', autopopulate);
 commentSchema.pre('findOne', autopopulate);
 
-module.exports = mongoose.model('comment', commentSchema);
+module.exports = mongoose.model('Comment', commentSchema);

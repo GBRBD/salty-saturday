@@ -9,6 +9,7 @@ const userMiddleware = require('../middlewares/userMiddleware');
 
 // Controllers
 
+const apiController = require('../controllers/apiController');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const storyController = require('../controllers/storyController');
@@ -133,9 +134,17 @@ router.get('/featurereq', testController.test);
  * API
  */
 
-router.use('/api/stories/:id/upvote', userMiddleware.isLoggedIn);
-
 // Upvote API
-router.post('/api/stories/:id/upvote', catchErrors(storyController.upvoteStory));
+router.post('/api/stories/:id/upvote',
+    userMiddleware.isLoggedIn,
+    catchErrors(storyController.upvoteStory));
+
+router.get('/api/stories/:id/getcomments/:update?', catchErrors(apiController.getComments))
+router.post('/api/stories/:id/addcomment',
+    userMiddleware.isLoggedIn,
+    catchErrors(apiController.addComment));
+
+router.get('/api/stories/polling/:id', apiController.poll);
+router.post('/api/stories/polling/:id/heartbeat', apiController.heartbeat);
 
 module.exports = router;

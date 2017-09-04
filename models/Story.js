@@ -33,6 +33,7 @@ const storySchema = new Schema({
 
 function autopopulate(next) {
     this.populate('author');
+    this.populate('comments');
     next();
 }
 
@@ -43,5 +44,12 @@ function autopopulate(next) {
 storySchema.pre('find', autopopulate);
 // I dont know what this does
 storySchema.pre('findOne', autopopulate);
+
+// find reviews where the stores _id property === reviews store property
+storySchema.virtual('comments', {
+    ref: 'Comment', // what model to link?
+    localField: '_id', // which field on the store?
+    foreignField: 'story' // which field on the review?
+});
 
 module.exports = mongoose.model('Story', storySchema);
