@@ -8,4 +8,7 @@ block content
   li: a(href=`/u/${author.username}/comments`) Comments
   hr
   
+  if stories
+    each story in stories
+      +storyCard(story)
     
