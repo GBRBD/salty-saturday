@@ -2,8 +2,16 @@ extends ../layout
 
 include ../mixins/_storyForm
 
+block scripts
+      script(src="/dist/counter.bundle.js")
+
 block content
+  
   if (!h.isSaturday)
-    p Sorry, bitch
+    .counter-wrapper
+      p#days-text
+      p#left-text
+
   else
     +storyForm(story)
+    

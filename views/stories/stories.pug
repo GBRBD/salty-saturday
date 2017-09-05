@@ -2,12 +2,16 @@ extends ../layout
 
 include ../mixins/_storyCard
 
+block scripts
+      script(src="/dist/counter.bundle.js")
+
 block content
   
   if (!h.isSaturday)
-    block scripts
-      script(src="/dist/counter.bundle.js")
-    p Sorry, bitch
+    .counter-wrapper
+      p#days-text
+      p#left-text
+      
   else
       each story in stories
         +storyCard(story)
