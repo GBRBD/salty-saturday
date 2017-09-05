@@ -107,6 +107,7 @@ exports.isUsernameExist = async (req, res, next) => {
   if (user) {
     req.flash('error', 'This username is already taken!');
     res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    return;
   }
 
   return next();

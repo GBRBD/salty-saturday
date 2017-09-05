@@ -38,7 +38,6 @@ exports.registerForm = (req, res) => {
  */
 exports.register = async (req, res, next) => {
     const user = new User({ username: req.body.username, email: req.body.email });
-    console.log(user);
     const register = promisify(User.register, User);
     await register(user, req.body.password);
     next(); // pass to authController.login
