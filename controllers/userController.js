@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Story = mongoose.model('Story');
-
+const Comment = mongoose.model('Comment');
 const promisify = require('es6-promisify');
 const crypto = require('crypto');
 const mail = require('../handlers/mail');
@@ -172,8 +172,8 @@ exports.saveNewPassword = async (req, res) => {
  * User profile overview
  */
 exports.userOverview = async (req, res) => {
-    const username = req.params.username;
-    const author = await User.findOne({ username: username });
+    const slug = req.params.usernameSlug.toLowerCase();
+    const author = await User.findOne({ slug: slug });
     res.render('profile/profile', { title: `${author.username}'s profile`, author });
     
 };
@@ -182,8 +182,8 @@ exports.userOverview = async (req, res) => {
  * User profile, with the user's posts
  */
 exports.userPosts = async (req, res) => {
-    const username = req.params.username;
-    const author = await User.findOne({ username: username });
+    const slug = req.params.usernameSlug.toLowerCase();
+    const author = await User.findOne({ slug: slug });
     const stories = await Story.find({ author: author._id });
     res.render('profile/profile', { title: `${author.username}'s salt`, stories, author });
 };
@@ -193,9 +193,22 @@ exports.userPosts = async (req, res) => {
  * User's upvotes
  */
 exports.userUpvotes = async (req, res) => {
-    const username = req.params.username;
-    const author = await User.findOne({ username: username });
+    const slug = req.params.usernameSlug.toLowerCase();
+    const author = await User.findOne({ slug: slug });
     const stories = await Story.find({ upvotes: author._id });
     res.render('profile/profile', { title: `${author.username}'s upvotes`,stories, author });
 };
 
+/**
+ * User's comments
+ */
+// keresse meg azokat a sztorikat ahol a comments tömb user id-je az adorr felhasználó
+exports.userComments = async (req, res) => {
+    const slug = req.params.usernameSlug.toLowerCase();
+    const author = await User.findOne({ slug: slug });
+    const comments = await Comment.find();
+    
+    
+    res.json(comments)
+    // res.render('profile/profile', { title: `${author.username}'s comments`,stories, author });
+};

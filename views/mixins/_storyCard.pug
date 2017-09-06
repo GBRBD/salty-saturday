@@ -2,7 +2,9 @@ mixin storyCard( story = {} )
   h2
     a(href=`/reee/${story._id}`) #{story.title}
   
-  a(href=`/u/${story.author.username}`) #{story.author.username}
+  a(href=`/u/${story.author.slug}`) #{story.author.username}
+  p Upvotes:
+    span#upvote-number= story.upvotes.length
   p= story.created
   //- Only the author can edit the story
   if user && story.author.equals(user._id)

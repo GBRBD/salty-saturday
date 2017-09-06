@@ -15,17 +15,32 @@ exports.createStory = async (req, res) => {
   req.body.author = req.user._id;
   const story = await (new Story(req.body)).save();
   req.flash('success', `Successfully Created.`);
-  // TODO: Redirect to the created story
   res.redirect(`/reee/${story._id}`);
 };
 
 /**
- * Get every story and show them on the '/stories', the last created store is the first in the page
+ * Get every story and show them on the '/hot', the last created store is the first in the page
  */
 exports.getHotStories = async (req, res) => {
   const stories = await Story.find().sort({ created: -1 });
   res.render('stories/stories', { title: 'Salty Stories', stories });
 };
+
+/**
+ * Hall of Salt, all time saltiest stories
+ */
+exports.getHallOfSalt = async (req, res) => {
+  const stories = await Story.getHallOfSalt();
+  res.render('stories/stories', { title: 'Hall of Salt', stories });
+}
+
+/**
+ * Weekly Top Stories
+ */
+exports.getWeeklyTop = async (req, res) => {
+  const stories = await Story.getWeeklyTop();
+  res.render('stories/stories', { title: 'Weekly Top', stories });
+}
 
 /**
  * Return a story by the given id
@@ -36,7 +51,6 @@ exports.getStoryById = async (req, res, next) => {
   if (!story) return next(); // !story = 404
 
   res.render('stories/story', { title: story.title, story });
-  
 };
 
 /**
@@ -89,24 +103,4 @@ exports.deleteStory = async (req, res) => {
   // Redriect to the story and tell it worked
   req.flash('success', 'You\'ve successfully deleted your salty story!');
   res.redirect('/');
-};
-
-/**
- * Upvote a story
- */
-exports.upvoteStory = async (req, res) => {
-  // The user id type is ObjectId you need to convert it to string.
-  const userId = req.user._id.toString();
-  const story = await Story.findById({ _id: req.params.id });
-  const upvotes = story.upvotes.map(obj => obj.toString());
-  const operator = upvotes.includes(userId) ? '$pull' : '$addToSet';
-
-  const upvote = await Story.
-    findByIdAndUpdate(
-    { _id: req.params.id },
-    { [operator]: { upvotes: req.user._id } },
-    { new: true }
-    );
-
-  res.json(upvote);
 };

@@ -24,27 +24,26 @@ const pagesController = require('../controllers/pagesController');
 router.get('/', storyController.getHotStories);
 router.get('/hot', storyController.getHotStories);
 
-// Daily top
-
-router.get('/top', testController.test);
+// Weekly top
+router.get('/top', storyController.getWeeklyTop);
 
 // Hall of Salt
-router.get('/hallofsalt', testController.test);
+router.get('/hallofsalt', storyController.getHallOfSalt);
 
 // Show an actual story
 router.get('/reee/:id', catchErrors(storyController.getStoryById));
 
 // User profile with the user's stories
-router.get('/u/:username', catchErrors(userController.userOverview));
+router.get('/u/:usernameSlug', catchErrors(userController.userOverview));
 
 // User's posts
-router.get('/u/:username/reees', catchErrors(userController.userPosts));
+router.get('/u/:usernameSlug/reees', catchErrors(userController.userPosts));
 
 // User's upvotes
-router.get('/u/:username/upvotes', catchErrors(userController.userUpvotes));
+router.get('/u/:usernameSlug/upvotes', catchErrors(userController.userUpvotes));
 
 // User's comments
-router.get('/u/:username/comments', testController.test);
+router.get('/u/:usernameSlug/comments', catchErrors(userController.userComments));
 
 /**
  * Auth
@@ -143,7 +142,7 @@ router.get('/featurereq', testController.test);
 // Upvote API
 router.post('/api/stories/:id/upvote',
     userMiddleware.isLoggedIn,
-    catchErrors(storyController.upvoteStory));
+    catchErrors(apiController.upvoteStory));
 
 router.get('/api/stories/:id/getcomments/:update?', catchErrors(apiController.getComments))
 router.post('/api/stories/:id/addcomment',

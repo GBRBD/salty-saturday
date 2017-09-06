@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
 mongoose.Promise = global.Promise;
 
 /**
@@ -29,7 +30,10 @@ const storySchema = new Schema({
         { type: mongoose.Schema.ObjectId, ref: 'User' }
     ]
     // TODO: Max Lenght Validation
-});
+}, {
+        toJSON: { virtuals: true },
+        toOjbect: { virtuals: true },
+    });
 
 function autopopulate(next) {
     this.populate('author');
@@ -45,11 +49,66 @@ storySchema.pre('find', autopopulate);
 // I dont know what this does
 storySchema.pre('findOne', autopopulate);
 
-// find reviews where the stores _id property === reviews store property
+// find comments where the stories _id property === comment story property
 storySchema.virtual('comments', {
     ref: 'Comment', // what model to link?
-    localField: '_id', // which field on the store?
-    foreignField: 'story' // which field on the review?
+    localField: '_id', // which field on the story?
+    foreignField: 'story' // which field on the comment?
 });
+
+/*
+storySchema.virtual('totalUpvotes')
+    .get(function () {
+        return this.upvotes.length;
+    });
+*/
+
+/**
+ * Query for the all time saltiest stories a.k.a. the Hall of Salt
+ */
+storySchema.statics.getHallOfSalt = function () {
+    return this.aggregate([
+        // filter for only items that have 5 or more upvotes
+        { $match: { 'upvotes.4': { $exists: true } } },
+        {
+            $addFields: {
+                totalUpvotes: { $size: "$upvotes" }
+            }
+        },
+        { $sort: { totalUpvotes: -1 } },
+        // change limit here
+        { $limit: 10 }
+    ]);
+};
+
+
+const today = new Date();
+today.setHours(0);
+today.setMinutes(0);
+today.setSeconds(0);
+
+/**
+ * Query for the weekly saltiest stories a.k.a. the Weekly Top
+ */
+storySchema.statics.getWeeklyTop = function () {
+    return this.aggregate([
+        // filter for only items that have 2 or more upvotes
+        {
+            $match: {
+                'upvotes.4': { $exists: true },
+                'created': { $gte: today}
+            }
+        },
+        {
+            $addFields: {
+                totalUpvotes: { $size: "$upvotes" }
+            }
+        },
+        { $sort: { totalUpvotes: -1 } },
+        // change limit here
+        { $limit: 100 }
+
+    ]);
+};
 
 module.exports = mongoose.model('Story', storySchema);
