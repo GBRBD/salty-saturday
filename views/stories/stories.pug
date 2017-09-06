@@ -7,14 +7,11 @@ block scripts
 
 block content
 
-  each story in stories
-    +storyCard(story)
-
-  //- if (!h.isSaturday)
+  if (!h.isSaturday)
     .counter-wrapper
       p#days-text
       p#left-text
       
-  //- else
+  else
       each story in stories
         +storyCard(story)

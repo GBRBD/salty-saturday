@@ -175,7 +175,6 @@ exports.userOverview = async (req, res) => {
     const slug = req.params.usernameSlug.toLowerCase();
     const author = await User.findOne({ slug: slug });
     res.render('profile/profile', { title: `${author.username}'s profile`, author });
-    
 };
 
 /**
@@ -201,14 +200,12 @@ exports.userUpvotes = async (req, res) => {
 
 /**
  * User's comments
+ * TODO: finish
  */
-// keresse meg azokat a sztorikat ahol a comments tömb user id-je az adorr felhasználó
 exports.userComments = async (req, res) => {
     const slug = req.params.usernameSlug.toLowerCase();
     const author = await User.findOne({ slug: slug });
     const comments = await Comment.find();
-    
-    
     res.json(comments)
     // res.render('profile/profile', { title: `${author.username}'s comments`,stories, author });
 };

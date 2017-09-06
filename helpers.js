@@ -10,7 +10,8 @@ const moment = require('moment');
 exports.m = moment() 
 
 // Can I do stuff ?
-exports.isSaturday = moment().isoWeekday() == 6
+// exports.isSaturday = moment().isoWeekday() == 6
+exports.isSaturday = true
 
 // Dump is a handy debugging function we can use to sort of "console.log" our data
 exports.dump = (obj) => JSON.stringify(obj, null, 2);

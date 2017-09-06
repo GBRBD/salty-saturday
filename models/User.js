@@ -29,9 +29,7 @@ const userSchema = new Schema({
 });
 
 userSchema.pre('save', async function (next) {
-
     this.slug = slug(this.username);
-
     next();
 });
 

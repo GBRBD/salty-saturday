@@ -6,13 +6,12 @@ block scripts
       script(src="/dist/counter.bundle.js")
 
 block content
-  +storyForm(story)
   
-  //- if (!h.isSaturday)
+  if (!h.isSaturday)
     .counter-wrapper
       p#days-text
       p#left-text
 
-  //- else
+  else
     +storyForm(story)
     

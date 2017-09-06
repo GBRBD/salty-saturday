@@ -56,13 +56,6 @@ storySchema.virtual('comments', {
     foreignField: 'story' // which field on the comment?
 });
 
-/*
-storySchema.virtual('totalUpvotes')
-    .get(function () {
-        return this.upvotes.length;
-    });
-*/
-
 /**
  * Query for the all time saltiest stories a.k.a. the Hall of Salt
  */
@@ -81,7 +74,6 @@ storySchema.statics.getHallOfSalt = function () {
     ]);
 };
 
-
 const today = new Date();
 today.setHours(0);
 today.setMinutes(0);
@@ -96,7 +88,7 @@ storySchema.statics.getWeeklyTop = function () {
         {
             $match: {
                 'upvotes.4': { $exists: true },
-                'created': { $gte: today}
+                'created': { $gte: today }
             }
         },
         {
