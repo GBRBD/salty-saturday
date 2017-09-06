@@ -1,6 +1,7 @@
 const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
+const fs = require('fs');
 
 /**
  * Multer options
@@ -23,7 +24,7 @@ const multerOptions = {
 exports.upload = multer(multerOptions).single('photo');
 
 /**
- * Picture resize, rename and save to disc
+ * Picture resize, rename, delete old pic from disc and save new pic to disc
  */
 exports.resize = async (req, res, next) => {
     // check if there is no new file to resize
@@ -31,6 +32,13 @@ exports.resize = async (req, res, next) => {
         next(); // skip to the next middleware
         return;
     }
+
+    if (req.user.photo) {
+        fs.unlink(`./public/uploads/${req.user.photo}`, (err) => {
+            if (err) throw err;
+        });
+    }
+
     const extension = req.file.mimetype.split('/')[1];
     req.body.photo = `${uuid.v4()}.${extension}`;
     // Rename, resize, save

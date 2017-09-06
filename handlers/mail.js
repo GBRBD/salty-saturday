@@ -19,6 +19,7 @@ const generateHTML = (filename, options = {}) => {
   return inlined;
 };
 
+
 exports.send = async (options) => {
   
   const html = generateHTML(options.filename, options);
@@ -35,4 +36,21 @@ exports.send = async (options) => {
   const sendMail = promisify(transport.sendMail, transport);
   return sendMail(mailOptions);
 
+};
+
+exports.sendContact = async (options) => {
+  
+  const html = generateHTML(options.filename, options);
+  const text = htmlToText.fromString(html);
+
+  const mailOptions = {
+    from: options.userEmail,
+    to: 'contact@salty-saturday.com',
+    subject: options.subject,
+    html,
+    text
+  };
+
+  const sendMail = promisify(transport.sendMail, transport);
+  return sendMail(mailOptions);
 };

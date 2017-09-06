@@ -130,7 +130,8 @@ router.post('/stories/:id/delete', catchErrors(storyController.deleteStory));
 router.get('/faq', pagesController.faq);
 
 // Contact
-router.get('/contact', testController.test);
+router.get('/contact', pagesController.getContact);
+router.post('/contact', catchErrors(pagesController.postContact));
 
 // Feature Request
 router.get('/featurereq', testController.test);

@@ -32,5 +32,5 @@ exports.menu = [
 exports.footermenu = [
   { slug: '/faq', title: 'FAQ' },
   { slug: '/contact', title: 'Contact' },
-  { slug: '/featurereq', title: 'Feature Request' },
+  // { slug: '/featurereq', title: 'Feature Request' },
 ];

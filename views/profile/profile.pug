@@ -7,7 +7,7 @@ block content
   li: a(href=`/u/${author.slug}/upvotes`) Upvotes
   //- li: a(href=`/u/${author.slug}/comments`) Comments
   hr
-  pre= h.dump(stories)
+  
   if stories
     each story in stories
       +storyCard(story)

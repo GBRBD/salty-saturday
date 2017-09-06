@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  form(action="/contact" method="POST" )
+    label(for="name") Name
+    input(type="name" name="name" id="name" )
+
+    label(for="email") E-mail
+
+    if user
+      input(type="email" name="email" id="email" value=user.email)
+    else
+      input(type="email" name="email" id="email")
+
+    label(for="message") Message
+    input(type="message" name="message" id="message" )
+    input(type="submit" value="Send")
