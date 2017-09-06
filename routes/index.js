@@ -43,7 +43,7 @@ router.get('/u/:usernameSlug/reees', catchErrors(userController.userPosts));
 router.get('/u/:usernameSlug/upvotes', catchErrors(userController.userUpvotes));
 
 // User's comments
-router.get('/u/:usernameSlug/comments', catchErrors(userController.userComments));
+//router.get('/u/:usernameSlug/comments', catchErrors(userController.userComments));
 
 /**
  * Auth
