@@ -61,7 +61,7 @@ exports.validateEmail = (req, res, next) => {
   const errors = req.validationErrors();
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
-    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    res.redirect('back');
     return; // stop the fn from running
   }
   return next();
@@ -89,7 +89,7 @@ exports.validateRegister = (req, res, next) => {
 
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
-    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    res.redirect('back');
     return; // stop the fn from running
   }
 
@@ -106,7 +106,7 @@ exports.isUsernameExist = async (req, res, next) => {
 
   if (user) {
     req.flash('error', 'This username is already taken!');
-    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    res.redirect('back');
     return;
   }
 
@@ -123,7 +123,7 @@ exports.isEmailExist = async (req, res, next) => {
 
   if (user) {
     req.flash('error', "This email address is already taken!");
-    res.render('auth/register', { title: 'Register', body: req.body, flashes: req.flash() });
+    res.redirect('back');
     return;
   }
 

@@ -1,22 +1,30 @@
 mixin storyCard( story = {} )
-  h2
-    a(href=`/reee/${story._id}`) #{story.title}
-  
-  a(href=`/u/${story.author.slug}`) #{story.author.username}
-  p Upvotes:
-    span#upvote-number= story.upvotes.length
-  p= story.created
-  //- Only the author can edit the story
-  if user && story.author.equals(user._id)
-    a(href=`/stories/${story._id}/edit`) Edit 
-  //- Only the author can delete the story
-  if user && story.author.equals(user._id)
-    form(action=`/stories/${story._id}/delete` method="POST")
-      button(type="submit" name="delete") Delete
-  p= story.story.split(' ').slice(0, 25).join(' ')
-  //- Report
-  //- Share
-  //- Comments
-  //- Upvote
-  //- Salty points
-  <hr>
+  .card
+      .card__story-header
+        img(src=`/uploads/${story.author.photo || 'salt.jpg'}`)
+
+        .card__story-info
+          .card__story-info--right
+            a(href=`/u/${story.author.slug}`) #{story.author.username}
+            span= h.m(story.created).fromNow()
+
+        a(href=`/reee/${story._id}` class="card__story-title") #{story.title}
+
+      .divider
+
+      .card__story-body
+        p= story.story.split(' ').slice(0, 50).join(' ') + '...'
+
+      .card__story-footer
+        //- If the user is the author
+        if user && story.author.equals(user._id)
+          .card__story-edit
+            a(href=`/stories/${story._id}/edit` class="card__story-edit-link") Edit
+            a(href=`/stories/${story._id}/delete` class="card__story-delete-link") Delete
+
+        a(href=`/reee/${story._id}#comment-root`)
+          i.fa.fa-comment-o
+          span= story.comments.length
+
+        i.fa.fa-heart-o
+        span= story.upvotes.length

@@ -8,7 +8,7 @@ const User = mongoose.model('User');
  * Log in the user
  */
 exports.login = passport.authenticate('local', {
-    failureRedirect: '/login',
+    failureRedirect: 'back',
     failureFlash: 'Failed Login!',
     successRedirect: '/',
     successFlash: 'You are now logged in!'

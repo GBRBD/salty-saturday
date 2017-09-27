@@ -1,7 +1,7 @@
 <template lang="pug">
-	.comment-feed-root
+	.comment-wrapper
 		commentForm(v-bind:story="id")
-		.comments(v-for="comment in comments")
+		.comment(v-for="comment in comments")
 			comment(v-bind:data="comment")
 </template>
 

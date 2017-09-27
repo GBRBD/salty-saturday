@@ -54,7 +54,6 @@ const uglify = new webpack.optimize.UglifyJsPlugin({ // eslint-disable-line
 // OK - now it's time to put it all together
 const config = {
   entry: {
-    // we only have 1 entry, but I've set it up for multiple in the future
     app: './public/js/app.js',
     story: './public/js/story.js',
     counter: './public/js/counter.js',
@@ -71,7 +70,6 @@ const config = {
     // name will be `App` because that is what we used above in our entry
     filename: '[name].bundle.js'
   },
-
   // remember we said webpack sees everthing as modules and how different loaders are responsible for different file types? Here is is where we implement them. Pass it the rules for our JS and our styles
   module: {
     rules: [js, vue, styles]
@@ -80,7 +78,7 @@ const config = {
   // plugins: [uglify]
   plugins: [
     // here is where we tell it to output our css to a separate file
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('light.theme.css'),
   ],
   resolve: {
     alias: {

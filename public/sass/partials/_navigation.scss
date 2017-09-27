@@ -1,0 +1,41 @@
+/**
+ * Navigation
+ */
+ 
+ .navigation-bar {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    height: 50px;
+    top: 0;
+    z-index: 10;
+}
+
+.navigation-bar__inner {
+    width: 1260px;
+}
+
+.navigation__list {
+    margin: 0 0 0 10px;
+    padding: 0;
+    list-style-type: none;
+}
+
+.navigation {
+    float: left;
+    li {
+        float: left;
+        line-height: 49px;
+        a {
+            padding: 17px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            &:hover {
+                padding-bottom: 13px;
+            }
+        }
+    }
+    &:after { @extend %clear; }
+}

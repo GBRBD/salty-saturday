@@ -5,18 +5,37 @@ block scripts
   script(src="/dist/comment.bundle.js")
 
 block content
-  h2= story.title
-  a(href=`/u/${story.author.slug}`) #{story.author.username}
-  p Upvotes:
-    span#upvote-number= story.upvotes.length
-  p= story.created
-  //- Only the author can edit the story
-  if user && story.author.equals(user._id)
-    a(href=`/stories/${story._id}/edit`) Edit
-  if user && story.author.equals(user._id)
-    form(action=`/stories/${story._id}/delete` method="POST")
-      button(type="submit" name="delete") Delete
-  p= story.story
-  button#upvote upvote!
-  #comment-root
-    comment
+  //- h2= story.title
+  //- a(href=`/u/${story.author.slug}`) #{story.author.username}
+  //- p Upvotes:
+  //-   span#upvote-number= story.upvotes.length
+  //- p= story.created
+  //- //- Only the author can edit the story
+  //- if user && story.author.equals(user._id)
+  //-   a(href=`/stories/${story._id}/edit`) Edit
+  //- if user && story.author.equals(user._id)
+  //-   form(action=`/stories/${story._id}/delete` method="POST")
+  //-     button(type="submit" name="delete") Delete
+  //- p= story.story
+  //- button#upvote upvote!
+  //- #comment-root
+  //-   comment
+  .card
+    .card__story-header
+        img(src=`/uploads/${story.author.photo || 'salt.jpg'}`)
+
+        .card__story-info
+          .card__story-info--right
+            a(href=`/u/${story.author.slug}`) #{story.author.username}
+            span= h.m(story.created).fromNow()
+
+        a(href=`/reee/${story._id}` class="card__story-title") #{story.title}
+    
+    .divider
+    .card__story-body
+      p= story.story
+      .card__story-body__upload
+        span#upvote-number= story.upvotes.length
+        button#upvote up
+    .card__story-comment#comment-root(data-user=user.photo || 'salt.jpg')
+      comment

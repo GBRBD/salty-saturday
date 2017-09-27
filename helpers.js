@@ -7,7 +7,7 @@ const fs = require('fs');
 const moment = require('moment');
 
 // moment.js is a handy library for displaying dates. We need this in our templates to display things like "Posted 5 minutes ago"
-exports.m = moment() 
+exports.m = moment
 
 // Can I do stuff ?
 // exports.isSaturday = moment().isoWeekday() == 6
@@ -21,16 +21,3 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // Some details about the site
 exports.siteName = `Salty Saturday`;
-
-exports.menu = [
-  { slug: '/hot', title: 'Hot' },
-  { slug: '/top', title: 'Weekly Top' },
-  { slug: '/hallofsalt', title: 'Hall of Salt' },
-  { slug: '/add', title: 'Add' }
-];
-
-exports.footermenu = [
-  { slug: '/faq', title: 'FAQ' },
-  { slug: '/contact', title: 'Contact' },
-  { slug: '/featurereq', title: 'Feature Request' },
-];

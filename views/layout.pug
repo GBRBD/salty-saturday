@@ -3,43 +3,103 @@ include mixins/_flash
 doctype html
 html(lang="en")
   head
-    title= `${title} | ${h.siteName}`
-    link(rel='stylesheet', href='/dist/style.css')
-    meta(charset="utf-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
+        title= `${title} | ${h.siteName}`
+        link(rel='stylesheet', href='/dist/light.theme.css')
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        script(src="https://use.fontawesome.com/19081a8576.js")
+        script(src="http://zeptojs.com/zepto.js")    
   body
+
     block header
-    a(href="/") SALTY SATURDAY
-      each item in h.menu
-        li
-          a(href=item.slug)
-            span #{item.title}
 
-      if user
-        li: a(href="/logout")
-          span Logout
-        li: a(href="/settings")
-          span Settings
-        p You are logged in as 
-          a(href=`/u/${user.slug}`) #{user.username}
-          img(src=`/uploads/${user.photo || 'salt.jpg'}` height="76" width="auto")
-      else
-        li: a(href="/register") Register
-        li: a(href="/login") Login
-        li: a(href="/reset") Forgot your shit?
-
-      hr
-      
-    +flash()
+      .navigation-bar
+        .navigation-bar__inner
+            a(href="/").logo
+                span.salty Salty
+                span |Saturday
+            nav.navigation
+                ul.navigation__list
+                    li
+                        a(href="/") Hot
+                    li
+                        a(href="/top") Weekly Top
+                    li
+                        a(href="/hallofsalt") Hall of Salt
+            if user
+                a(href="/add" class="button red-button add-button") Create new salty story
 
     .content
-      block content
+      .content__inner
+    
+        .content__inner__side-oc--left
+          if user
+            .card
+              .card__user-header
+                img(src=`/uploads/${user.photo || 'salt.jpg'}`)
+                .card__user-header-links
+                  .xyz
+                    a(href=`/u/${user.username}`) #{user.username}
+                    a(href="/settings") Settings
+                  a(href="/logout" class="logout") Log out
 
-      block footer
-        each item in h.footermenu
-          li
-            a(href=item.slug)
-              span #{item.title}
+            .card
+                h2 My stories
+                .divider
+                .card__body
+                  p Wub wub wub
+
+
+            .card
+                h2 Upvotes
+                .divider
+                .card__body
+                  p Becky pls lemme smush
+
+          else
+            .card
+              h2 Log in
+              .divider
+              .card__body
+                include mixins/_loginForm
+                +loginForm()
+            
+            p.auth-divider OR
+
+            .card
+                h2 Sign up
+                .divider
+                .card__body
+                    include mixins/_registerForm
+                    +registerForm()
+
+        .content__inner__oc
+            +flash()
+            block content
+
+        .content__inner__side-oc--right
+
+            .search.form__elem
+                input(type="text" placeholder="Are you lookin' at me?")
+                i.fa.fa-search
+
+            .card
+                h2 Random 5
+                .divider
+                .card__body
+                    p Random stuff
+
+            .card
+                h2 Recent activites
+                .divider
+                .card__body
+                    p Latest comments
+
+            .card
+                .card__body
+                    a(href="/contact") Contact
+                    span.circle-divider &#9679;
+                    a(href="/faq") FAQ
 
 
     block scripts

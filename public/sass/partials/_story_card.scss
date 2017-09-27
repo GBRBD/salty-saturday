@@ -1,0 +1,117 @@
+/**
+ * "Feed" story cards
+ */
+
+.card__story-header {
+    padding: 10px;
+    img {
+        float: right;
+        width: 50px;
+        height: 50px;
+        border-radius:3px;
+    }
+    &:after { @extend %clear; }
+}
+
+.card__story-info {
+    float: right;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.card__story-info--right {
+    float: right;
+    a {
+        display: block;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    span {
+        font-size: 12px;
+    }
+}
+
+.card__story-title {
+    float: left;
+    font-size: 17px;
+    line-height: 40px;
+    font-weight: bold;
+}
+
+.card__story-body {
+    padding: 0 10px;
+    p {
+        padding: 10px 5px;
+        text-align: justify;
+    }
+    &:after {
+        @extend %clear;
+    }
+}
+
+.card__story-footer {
+    padding: 10px;
+    text-align: right;
+    i {
+        margin: 0 6px;
+    }
+}
+
+.card__story-edit {
+    float: left;
+    a {
+        margin: 0 5px;
+    }
+}
+
+.card__story-body__upload {
+    float: right;
+}
+
+.comment-form {
+    display: flex;
+    margin-top: 20px;
+    padding: 10px;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    border-bottom: 1px dashed #dfe2e5;
+    img {
+        float: left;
+        width: 50px;
+        height: 50px;
+        border-radius: 3px;
+    }
+    .form {
+        width: 100%;
+        margin-left: 10px;
+        margin-top: -5px; // why tho ???
+    }
+    button {
+        float: right
+    }
+}
+
+.comment {
+    padding: 10px;
+}
+
+.comment__inner {
+    display: flex;
+    flex: row wrap;
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 3px;
+    }
+    &:after {
+        @extend %clear;
+    }
+}
+
+.comment__inner__content {
+    width: 100%;
+    margin-left: 10px;
+    span i {
+        margin: 0 5px;
+    }
+}

@@ -1,0 +1,39 @@
+/**
+ * Side user card
+ */
+
+.card__user-header {
+    padding: 10px;
+    img {
+        float: left;
+        width: 50px;
+        height: 50px;
+        border-radius:3px;
+    }
+    &:after { @extend %clear; }
+}
+
+.card__user-header-links {
+    margin-left: 60px;
+}
+
+.xyz {
+    float: left;
+    height: 50px;
+    padding: 4px 0;
+    a {
+        &:nth-child(1) {
+            display: block;
+            font-size: 17px;
+            font-weight: bold;
+        }
+    }
+    span {
+        margin: 0 5px;
+    }
+}
+
+.logout {
+    float: right;
+    font-size: 11px;
+}

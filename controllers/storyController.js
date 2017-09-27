@@ -103,4 +103,5 @@ exports.deleteStory = async (req, res) => {
   // Redriect to the story and tell it worked
   req.flash('success', 'You\'ve successfully deleted your salty story!');
   res.redirect('/');
+  
 };

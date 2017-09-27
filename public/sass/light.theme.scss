@@ -1,0 +1,68 @@
+@import 'colors/light.colors';
+@import 'style';
+
+body {
+    background: #f5f8fa;
+    color: $text;
+}
+
+
+a {
+    color: $text;
+}
+
+.divider {
+    background: #eee;
+}
+
+.salty {
+    color: $red;
+}
+
+.navigation-bar {
+    background: white;
+    box-shadow: 0px 1px 3px 0px #c3c3c3; 
+}
+
+.navigation__list {
+    a:hover {
+        border-bottom: 3px solid $scarpa;
+    }
+}
+
+.card {
+    background: white;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+
+.card__story-edit-link:hover {
+    color: $primary;
+}
+
+.card__story-delete-link:hover {
+    color: $red;
+}
+
+.logout:hover {
+    color: $red;
+}
+
+.flash__remove:hover {
+    color: $red;
+}
+
+.flash--error {
+    border-left: 3px solid $red;
+}
+
+.flash--success {
+    border-left: 3px solid $primary;
+}
+
+.comment-form {
+    background: #f5f5f5;
+}
+
+.the-end {
+    color: #b7b7b7;
+}

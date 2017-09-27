@@ -1,10 +1,15 @@
 mixin storyForm( story = {} )
-  form(action=`/add/${story._id || ''}` method="POST")
-    //- Title
-    label(for="title") Title
-    input(type="text" name="title" value=story.title)
-    //- Story
-    label(for="title") Story
-    textarea(name="story")= story.story
-    //- Button
-    input(type="submit" value="Save")
+	form.form.form-salt(action=`/add/${story._id || ''}` method="POST")
+		//- Title
+		.form__elem
+			label(for="title") Title
+			input(type="text" name="title" value=story.title)
+		//- Story
+		.form__elem
+			label(for="title") Salt
+			textarea(name="story")= story.story
+		p Characters left: 1024
+		//- Button
+		//- input(type="submit" value="Set sail for adventure!" class="big-button green-button")
+		button(type="submit" class="big-button green-button") Set sail for adventure
+			i.fa.fa-send
